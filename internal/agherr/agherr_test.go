@@ -5,8 +5,13 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/AdguardTeam/AdGuardHome/internal/testutil"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestMain(m *testing.M) {
+	testutil.DiscardLogOutput(m)
+}
 
 func TestError_Error(t *testing.T) {
 	testCases := []struct {
@@ -43,7 +48,7 @@ func TestError_Unwrap(t *testing.T) {
 	)
 	errs := []error{
 		errSimple:  errors.New("a"),
-		errWrapped: fmt.Errorf("%w", errors.New("nested")),
+		errWrapped: fmt.Errorf("err: %w", errors.New("nested")),
 		errNil:     nil,
 	}
 	testCases := []struct {
